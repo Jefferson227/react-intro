@@ -3,7 +3,6 @@ import './App.css';
 import Person from './Person/Person';
 import Human from './Human/Human';
 
-
 class App extends Component {
   state = {
       name: 'James',
@@ -18,12 +17,19 @@ class App extends Component {
       });
   }
 
+  changeNameHandler = (event) => {
+    this.setState({ name: event.target.value });
+  }
+
   render() {
     return (
       <div className="App">
         <Person name="Jeff" age="29"/>
         <Person name="Luh" age="28"/>
-        <Human name={this.state.name} age={this.state.age}>{this.state.hobbie}</Human>
+        <Human
+          name={this.state.name}
+          age={this.state.age}
+          changed={this.changeNameHandler}>{this.state.hobbie}</Human>
         <button onClick={this.switchHumanHandler}>Switch human</button>
       </div>
     );
