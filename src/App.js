@@ -1,36 +1,43 @@
 import React, { Component } from 'react';
 import './App.css';
-import Person from './Person/Person';
-import Human from './Human/Human';
+import Validation from './Validation/Validation';
+import Char from './Char/Char';
 
 class App extends Component {
-  state = {
-      name: 'James',
-      hobbie: 'play guitar',
-      age: 30
-  };
+  state = { text: '' };
 
-  switchHumanHandler = () => {
-      this.setState({
-          name: 'a human who changed the state',
-          hobbie: 'bang the head'
-      });
+  changeTextHandler = (inputEl) => {
+    this.setState({ text: inputEl.target.value})
   }
 
-  changeNameHandler = (event) => {
-    this.setState({ name: event.target.value });
+  removeLetterHandler = (index) => {
+    const letters = this.state.text.split('');
+    const newLetters = [...letters];
+    newLetters.splice(index, 1);
+
+    this.setState({ text: newLetters.join('') });
   }
 
   render() {
+    let charArray = null;
+
+    if (this.state.text) {
+      charArray = this.state.text.split('')
+                    .map((letter, index) => 
+                      <Char
+                        letter={letter}
+                        key={index}
+                        click={this.removeLetterHandler.bind(this, index)} />)
+    }
+
     return (
       <div className="App">
-        <Person name="Jeff" age="29"/>
-        <Person name="Luh" age="28"/>
-        <Human
-          name={this.state.name}
-          age={this.state.age}
-          changed={this.changeNameHandler}>{this.state.hobbie}</Human>
-        <button onClick={this.switchHumanHandler}>Switch human</button>
+        <input type="text"
+          onChange={this.changeTextHandler} />
+
+        <Validation text={this.state.text} value={this.state.text} />
+
+        {charArray}
       </div>
     );
   }
