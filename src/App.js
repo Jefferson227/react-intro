@@ -33,9 +33,11 @@ class App extends Component {
     return (
       <div className="App">
         <input type="text"
-          onChange={this.changeTextHandler} />
+          onChange={this.changeTextHandler}
+          value={this.state.text} />
 
-        <Validation text={this.state.text} value={this.state.text} />
+        <Validation text={this.state.text}
+          value={this.state.text} />
 
         {charArray}
       </div>
